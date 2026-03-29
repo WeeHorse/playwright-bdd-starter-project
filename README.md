@@ -134,7 +134,9 @@ export default defineConfig({
 
 ## Steg 6 – Lägg till npm-skript
 
-Uppdatera `scripts`-sektionen i `package.json`:
+Uppdatera `scripts`-sektionen i `package.json`. 
+
+_Du behöver sällan alla script som finns här - listan är ganska komplett för att visa vilka olika verktyg och möjligheter som finns runt playwright._
 
 ```json
 "scripts": {
