@@ -111,7 +111,7 @@ export default defineConfig({
   },
   reporter: [['list', { open: 'always' }],['html', { open: 'on-failure' }]],
   use: {
-    baseURL: 'http://localhost:5010',  // Ändra till din applikations URL
+    baseURL: 'https://demo.playwright.dev/todomvc',  // Ändra till din applikations URL, t ex http://localhost:5010 
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure'
@@ -143,11 +143,11 @@ _Du behöver sällan alla script som finns här - listan är ganska komplett fö
   "test": "npm run test:ui",
   "bdd:gen": "bddgen",
   "test:ui": "npm run bdd:gen && playwright test --project=ui",
+  "test:ui-mode": "npm run bdd:gen && playwright test --project=ui --ui",
   "test:headed": "npm run bdd:gen && playwright test --project=ui --headed",
   "test:debug": "npm run bdd:gen && playwright test --project=ui --debug",
   "test:pwdebug": "npm run bdd:gen && PWDEBUG=1 playwright test --project=ui",
   "test:pwdebug:win": "npm run bdd:gen && cross-env PWDEBUG=1 playwright test --project=ui",
-  "test:ui-mode": "npm run bdd:gen && playwright test --project=ui --ui",
   "test:codegen": "playwright codegen",
   "report": "playwright show-report"
 }
@@ -155,11 +155,11 @@ _Du behöver sällan alla script som finns här - listan är ganska komplett fö
 
 * `bdd:gen` – Genererar körbara testfiler utifrån dina `.feature`-filer.
 * `test:ui` – Genererar och kör testerna i headless-läge.
+* `test:ui-mode` – Startar Playwright UI Mode för visuell testkörning.
 * `test:headed` – Kör testerna med synlig webbläsare (bra vid felsökning).
 * `test:debug` – Kör tester i debug-läge med stegvis exekvering och Inspector.
 * `test:pwdebug` – Öppnar Playwright Inspector för att stega och inspektera selectors.
 * `test:pwdebug:win` – Om inte `test:pwdebug` fungerar på din windows kan du köra den här specialhanteringen av miljövariabeln.
-* `test:ui-mode` – Startar Playwright UI Mode för visuell testkörning.
 * `test:codegen` – Startar kodgenerator för att klicka fram selectors och testkod.
 * `report` – Öppnar HTML-rapport med resultat från senaste testkörningen.
 
@@ -181,35 +181,7 @@ Gherkin-scenarion skrivs med nyckelorden **Feature**, **Scenario**, **Given**, *
 
 ---
 
-## Steg 8 – Skapa en Page Object
-
-Page Object-mönstret innebär att varje sida i applikationen representeras av en klass som kapslar in selektorer och interaktioner. Detta gör testerna mer underhållbara.
-
-Skapa filen `e2e/ui/pages/my.page.js`:
-
-```js
-import { expect } from "@playwright/test";
-
-export default class MyPage {
-    constructor(page) {
-        this.page = page;
-    }
-
-    async goto() {
-        await this.page.goto('/');
-    }
-
-    async expectTitle(expectedText) {
-        await expect(this.page).toHaveTitle(new RegExp(expectedText));
-    }
-}
-```
-
-Lägg till fler metoder allt eftersom du utökar dina tester.
-
----
-
-## Steg 9 – Skriva stegdefinitioner
+## Steg 8 – Skriva stegdefinitioner
 
 Stegdefinitioner kopplar Gherkin-meningar till faktisk Playwright-kod.
 
@@ -235,7 +207,7 @@ Then('ska jag se sidans titel innehåller {string}', async ({ page }, expected) 
 
 ---
 
-## Steg 10 – Kör testerna
+## Steg 9 – Kör testerna
 
 Se till att din applikation körs på den `baseURL` du konfigurerade, kör sedan:
 
@@ -261,8 +233,6 @@ mitt-testprojekt/
     └── ui/
         ├── features/
         │   └── smoke.feature ← Gherkin-scenarion
-        ├── pages/
-        │   └── game.page.js  ← Page Object-klasser
         └── steps/
             └── smoke.steps.js ← Stegdefinitioner
 ```

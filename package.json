@@ -5,11 +5,11 @@
     "test": "npm run test:ui",
     "bdd:gen": "bddgen",
     "test:ui": "npm run bdd:gen && playwright test --project=ui",
+    "test:ui-mode": "npm run bdd:gen && playwright test --project=ui --ui",
     "test:headed": "npm run bdd:gen && playwright test --project=ui --headed",
     "test:debug": "npm run bdd:gen && playwright test --project=ui --debug",
     "test:pwdebug": "npm run bdd:gen && PWDEBUG=1 playwright test --project=ui",
     "test:pwdebug:win": "npm run bdd:gen && cross-env PWDEBUG=1 playwright test --project=ui",
-    "test:ui-mode": "npm run bdd:gen && playwright test --project=ui --ui",
     "test:codegen": "playwright codegen",
     "report": "playwright show-report"
   },
