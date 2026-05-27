@@ -14,7 +14,7 @@ export default defineConfig({
   },
   reporter: [['list', { open: 'always' }], ['html', { open: 'on-failure' }]],
   use: {
-    baseURL: 'http://localhost:5010',  // Ändra till din applikations URL
+    baseURL: 'https://practice.expandtesting.com/',  // Ändra till din applikations URL
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure'
