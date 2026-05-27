@@ -11,19 +11,17 @@ Given('att jag öppnar inloggningssidan', async ({ page }) => {
   await page.goto('/login');
 });
 
-When('jag registrerar en ny användare', async ({ page }) => {
-  const username = `bdduser${Date.now()}`;
-
-  await page.getByLabel('Username').fill(username);
-  await page.getByLabel('Password', { exact: true }).fill('Pass123!');
-  await page.getByLabel('Confirm Password').fill('Pass123!');
-  await page.getByRole('button', { name: 'Register' }).click();
+When(/^jag skriver "([^"]*)" i (#[A-Za-z0-9_-]+)$/, async ({ page }, value, selector) => {
+  await page.locator(selector).fill(value);
 });
 
-When('jag loggar in med användarnamn {string} och lösenord {string}', async ({ page }, username, password) => {
-  await page.getByLabel('Username').fill(username);
-  await page.getByLabel('Password').fill(password);
-  await page.getByRole('button', { name: 'Login' }).click();
+When('jag skriver ett unikt användarnamn i #username', async ({ page }) => {
+  const username = `bdduser${Date.now()}`;
+  await page.locator('#username').fill(username);
+});
+
+When('jag klickar på knappen {string}', async ({ page }, buttonName) => {
+  await page.getByRole('button', { name: buttonName }).click();
 });
 
 Then('ska jag se registreringsmeddelandet {string}', async ({ page }, expectedMessage) => {
